@@ -1,5 +1,9 @@
 package token
 
+import (
+	"vibra/ast"
+)
+
 type TokenType string
 
 type Token struct {
@@ -57,3 +61,20 @@ func LookupIdent(ident string) TokenType {
 	}
 	return IDENT
 }
+
+type LetStatement struct {
+	Token Token // the token.LET token
+	Name  *Identifier
+	Value ast.Expression
+}
+
+func (ls *LetStatement) statementNode()       {}
+func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal }
+
+type Identifier struct {
+	Token Token // the token.IDENT token
+	Value string
+}
+
+func (i *Identifier) expressionNode()      {}
+func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
